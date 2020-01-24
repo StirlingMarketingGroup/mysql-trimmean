@@ -84,6 +84,7 @@ select @@plugin_dir;
 then replace `/usr/lib/mysql/plugin` below with your MySQL plugin directory.
 
 ```shell
+cd ~ # or wherever you store your git projects
 git clone https://github.com/StirlingMarketingGroup/mysql-trimmean.git
 cd mysql-trimmean
 gcc -O3 -I/usr/include/mysql -o trimmean.so -shared trimmean.c -fPIC

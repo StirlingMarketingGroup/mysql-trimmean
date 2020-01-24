@@ -88,7 +88,7 @@ cd ~ # or wherever you store your git projects
 git clone https://github.com/StirlingMarketingGroup/mysql-trimmean.git
 cd mysql-trimmean
 gcc -O3 -I/usr/include/mysql -o trimmean.so -shared trimmean.c -fPIC
-sudo cp trimmean.so /usr/lib/mysql/plugin/trimmean.so
+sudo cp trimmean.so /usr/lib/mysql/plugin/trimmean.so # replace plugin dir here if needed
 ```
 
 Enable the function in MySQL by running this MySQL query

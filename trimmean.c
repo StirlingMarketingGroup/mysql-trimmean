@@ -48,8 +48,6 @@ my_bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 	args->arg_type[0] = REAL_RESULT;
     args->arg_type[1] = REAL_RESULT;
 
-    args->arg_type[2] = INT_RESULT;
-
     struct trimmean_data *buffer = malloc(sizeof(struct trimmean_data));
     buffer->count = 0;
     buffer->abscount = 0;
@@ -57,7 +55,8 @@ my_bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
     buffer->values = NULL;
 
     initid->decimals = 4;
-    if (args->arg_count == 3 && (*((unsigned int*)args->args[2]) <= 16)) {
+    if (args->arg_count == 3 && args->arg_type[2] == INT_RESULT
+        && (*((unsigned int*)args->args[2]) <= 16)) {
         initid->decimals = *((unsigned int*)args->args[2]);
     }
 

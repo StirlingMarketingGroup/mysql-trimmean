@@ -1,29 +1,13 @@
-#ifdef STANDARD
-/* STANDARD is defined, don't use any mysql functions */
 #include <string.h>
-#ifdef __WIN__
-typedef unsigned __int64 ulonglong; /* Microsofts 64 bit types */
-typedef __int64 longlong;
-#else
-typedef unsigned long long ulonglong;
-typedef long long longlong;
-#endif /*__WIN__*/
-#else
-#include <my_global.h>
-#include <my_sys.h>
-#if defined(MYSQL_SERVER)
-#include <m_string.h>
-#else
-/* when compiled as standalone */
-#include <string.h>
+#include "mysql.h"
+
+#ifndef __cplusplus
+#include <stdbool.h>
 #endif
-#endif
-#include <mysql.h>
-#include <stdint.h>
 
 #define BUFFERSIZE 1024
 
-my_bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message);
+bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message);
 void trimmean_deinit(UDF_INIT *initid);
 void trimmean_clear(UDF_INIT *initid, char *is_null, char *is_error);
 void trimmean_reset(UDF_INIT* initid, UDF_ARGS* args, char* is_null, char *error);
@@ -39,7 +23,7 @@ struct trimmean_data {
 };
 
 
-my_bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+bool trimmean_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 	if (args->arg_count < 2 || args->arg_count > 3) {
 		strcpy(message, "`trimmean`() requires 2 parameter: the values to trim and average, and the fractional number of data points to exclude from the calculation");
 		return 1;
